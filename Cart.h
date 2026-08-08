@@ -1,106 +1,120 @@
 #pragma once
-#include<iostream>
+
+#include <iostream>
+#include <vector>
+
 #include "CartItem.h"
-#include "Product.h"
+#include "utilities.h"
+
 using namespace std;
-class cart
+
+class Cart
 {
-    private:
-    //Cart has-a CartItem
-    cartitem items[10];
-    int itemcount;
-    public:
-    cart()
+private:
+    vector<CartItem> items;
+
+public:
+    // ================= ADD ITEM =================
+
+    void addItem(Product product, int quantity)
     {
-        itemcount=0;
-    }
-    //add item to cart
-     void additem(int id, int qty)
-    {
-        if(itemcount < 10)
+        if (quantity <= 0)
         {
-            /*eg itemcount=0 
-            additem(1,2)
-            then items[0]=id 1 quantity 1
-            itemcount=1
-            */ 
-            items[itemcount] = cartitem(id, qty);
-            itemcount++;
-        }
-        else
-        {
-            cout<<"Cart is full"<<endl;
-        }
-    }
-    //product array and its size receive
-   void viewcart(Product products[], int size)
-{
-    cout << "\n===== CART =====\n";
-    //cart ma vako every item check garxa
-    for(int i = 0; i < itemcount; i++)
-    {
-        int id = items[i].getproductid();
-    //every item ko lagi product array ko item check garxa
-        for(int j = 0; j < size; j++)
-        {
-            if(products[j].getId() == id)
-            {
-                cout << "Name: " << products[j].getName() << endl;
-                cout << "Price: " << products[j].getPrice() << endl;
-                cout << "Quantity: " << items[i].getproductquantity() << endl;
-
-                cout << endl;
-            }
-        }
-    }
-}
-
-//calculate total price
-double totalprice(Product products[], int size)
-{
-    double total = 0;
-
-    for(int i = 0; i < itemcount; i++)
-    {
-        int id = items[i].getproductid();
-
-        for(int j = 0; j < size; j++)
-        {
-            if(products[j].getId() == id)
-            {
-                double price = products[j].getPrice();
-                int quantity = items[i].getproductquantity();
-
-                double itemTotal = price * quantity;
-
-                total = total + itemTotal;
-            }
-        }
-    }
-
-    return total;
-}
-//remove items from cart
-void removeitem(int id)
-{
-    for(int i = 0; i < itemcount; i++)
-    {
-        if(items[i].getproductid() == id)
-        {
-            //shift next item to left
-            for(int j = i; j < itemcount - 1; j++)
-            {
-                items[j] = items[j + 1];
-            }
-
-            itemcount--;
-                
-            cout << "Item removed successfully\n";
+            cout << "Invalid quantity!\n";
             return;
         }
+
+        // Check if product is already in cart
+        for (CartItem &item : items)
+        {
+            if (item.getProduct().getId() == product.getId())
+            {
+                item.setQuantity(
+                    item.getQuantity() + quantity);
+
+                cout << "Product quantity updated in cart!\n";
+                return;
+            }
+        }
+
+        items.push_back(
+            CartItem(product, quantity));
+
+        cout << "Product added to cart!\n";
     }
 
-    cout << "Item not found\n";
-}
-};
+    // ================= REMOVE ITEM =================
 
+    void removeItem(int productId)
+    {
+        for (int i = 0; i < items.size(); i++)
+        {
+            if (items[i].getProduct().getId() == productId)
+            {
+                items.erase(items.begin() + i);
+
+                cout << "Product removed from cart!\n";
+                return;
+            }
+        }
+
+        cout << "Product not found in cart!\n";
+    }
+
+    // ================= DISPLAY CART =================
+
+    void displayCart() const
+    {
+        if (items.empty())
+        {
+            cout << "Cart is empty.\n";
+            return;
+        }
+
+        cout << "\n========== CART ==========\n";
+
+        for (const CartItem &item : items)
+        {
+            item.display();
+
+            cout << "--------------------------\n";
+        }
+
+        cout << "Total: $" << getTotal() << endl;
+    }
+
+    // ================= GET TOTAL =================
+
+    double getTotal() const
+    {
+        double total = 0;
+
+        for (const CartItem &item : items)
+        {
+            total += item.getSubtotal();
+        }
+
+        return total;
+    }
+
+    // ================= EMPTY =================
+
+    bool isEmpty() const
+    {
+        return items.empty();
+    }
+
+    // ================= CLEAR =================
+
+    void clear()
+    {
+        items.clear();
+    }
+
+    // ================= GET ITEMS =================
+
+    vector<CartItem> getItems() const
+    {
+        return items;
+    }
+};
