@@ -1,37 +1,38 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-class admin
+class Admin
 {
 private:
-    string username;
-    string password;
+    const string username = "admin";
+    const string password = "admin123";
+
 public:
-
-    admin()
+    bool login()
     {
-        username = "admin";
-        password = "1234";
-    }
+        string inputUsername;
+        string inputPassword;
 
+        cout << "\n========== ADMIN LOGIN ==========\n";
 
-    bool login(string u, string p)
-    {
-        if(username == u && password == p)
+        cout << "Username: ";
+        cin >> inputUsername;
+
+        cout << "Password: ";
+        cin >> inputPassword;
+
+        if (inputUsername == username &&
+            inputPassword == password)
         {
+            cout << "Admin login successful!\n";
             return true;
         }
 
+        cout << "Invalid admin credentials!\n";
         return false;
     }
-
-    void addProduct(...);
-
-    void removeProduct(...);
-
-    void updateProduct(...);
-
-    void viewOrders();
 };

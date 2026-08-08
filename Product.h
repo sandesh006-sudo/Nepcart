@@ -13,17 +13,19 @@ private:
     string category;
     double price;
     int quantity;
-public:
 
+public:
     // default constructor
-    Product(){
+    Product()
+    {
         id = 0;
         name = "";
         category = "";
         price = 0;
         quantity = 0;
     }
-    Product(int i, string n, string c, double p, int q){
+    Product(int i, string n, string c, double p, int q)
+    {
         setId(i);
         setName(n);
         setCategory(c);
@@ -42,7 +44,7 @@ public:
     }
 
     // getter function haru
-    //constant member function to not to modify object data
+    // constant member function to not to modify object data
     int getId() const
     {
         return id;
@@ -68,43 +70,46 @@ public:
         return quantity;
     }
 
-
     // ========= Setters =========
-    void setId(int i){id=i;}
+    void setId(int i) { id = i; }
 
-    void setName(string n){
-        name=n;
+    void setName(string n)
+    {
+        name = n;
     }
 
-    void setPrice(double p){
-        if(p<0){
-            cout<<"Price can't be negative! Set to 0.\n";
-            price=0;
+    void setPrice(double p)
+    {
+        if (p < 0)
+        {
+            cout << "Price can't be negative! Set to 0.\n";
+            price = 0;
         }
         else
-            price=p;
+            price = p;
     }
 
-    void setQuantity(int q){
-        if(q<0){
-            cout<<"Quantity can't be negative! Set to 0.\n";
-            quantity=0;
-        }
-        else 
-            quantity=q;
-    }
-
-    void setCategory(string c){category=c;}
-
-    
-    // vayeko amount reduce garxa
-    bool reducestock(int amount)
+    void setQuantity(int q)
     {
-    /*example quantity 3 xa amount ma 2 aaxa so quantity 3-2=1*/
+        if (q < 0)
+        {
+            cout << "Quantity can't be negative! Set to 0.\n";
+            quantity = 0;
+        }
+        else
+            quantity = q;
+    }
+
+    void setCategory(string c) { category = c; }
+
+    // vayeko amount reduce garxa
+    bool reduceStock(int amount)
+    {
+        /*example quantity 3 xa amount ma 2 aaxa so quantity 3-2=1*/
         if (amount > 0 && amount <= quantity)
         {
-            quantity =quantity-amount;
-            
+            quantity = quantity - amount;
+
             return true;
         }
 

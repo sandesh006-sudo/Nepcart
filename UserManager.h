@@ -1,49 +1,155 @@
+#pragma once
+
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sstream>
 #include "User.h"
+#include "utilities.h"
 
 using namespace std;
 
-class usermanager
+class UserManager
 {
 private:
-    user users[10];
-    int usercount;
+    const string USER_FILE;
+    vector<User> users;
 
 public:
-
-    usermanager()
+    UserManager() : USER_FILE("users.txt")
     {
-        usercount = 0;
+        loadUsers();
     }
 
+    // ================= LOAD USERS =================
 
-    void registeruser(string username, string password)
+    void loadUsers()
     {
-        if(usercount < 10)
-        {
-            users[usercount] = user(username, password);
-            usercount++;
+        ifstream fin(USER_FILE);
 
-            cout << "Registration successful.\n";
-        }
-        else
-        {
-            cout << "User limit reached.\n";
-        }
-    }
+        if (!fin.is_open())
+            return;
 
+        string line;
 
-    bool login(string username, string password)
-    {
-        for(int i = 0; i < usercount; i++)
+        while (getline(fin, line))
         {
-            if(users[i].getusername() == username &&
-               users[i].getpassword() == password)
+            stringstream ss(line);
+
+            string username;
+            string password;
+
+            getline(ss, username, '|');
+            getline(ss, password);
+
+            if (!username.empty())
             {
+                users.push_back(
+                    User(username, password));
+            }
+        }
+
+        fin.close();
+    }
+
+    // ================= CHECK USERNAME =================
+
+    bool usernameExists(const string &username)
+    {
+        for (const User &user : users)
+        {
+            if (user.getUsername() == username)
+                return true;
+        }
+
+        return false;
+    }
+
+    // ================= REGISTER =================
+
+    bool registerUser()
+    {
+        string username;
+        string password;
+
+        cout << "\n========== REGISTER ==========\n";
+
+        cout << "Username: ";
+        cin >> username;
+
+        if (usernameExists(username))
+        {
+            cout << "Username already exists!\n";
+            return false;
+        }
+
+        cout << "Password: ";
+        cin >> password;
+
+        users.push_back(
+            User(username, password));
+
+        saveUsers();
+
+        cout << "Registration successful!\n";
+
+        return true;
+    }
+
+    // ================= LOGIN =================
+
+    bool login(string &loggedInUsername)
+    {
+        string username;
+        string password;
+
+        cout << "\n========== LOGIN ==========\n";
+
+        cout << "Username: ";
+        cin >> username;
+
+        cout << "Password: ";
+        cin >> password;
+
+        for (const User &user : users)
+        {
+            if (user.getUsername() == username &&
+                user.getPassword() == password)
+            {
+                loggedInUsername = username;
+
+                cout << "Login successful!\n";
+
                 return true;
             }
         }
 
+        cout << "Invalid username or password!\n";
+
         return false;
+    }
+
+    // ================= SAVE USERS =================
+
+    void saveUsers()
+    {
+        ofstream fout(USER_FILE, ios::trunc);
+
+        if (!fout.is_open())
+        {
+            cerr << "Cannot open users file.\n";
+            return;
+        }
+
+        for (const User &user : users)
+        {
+            fout << user.getUsername()
+                 << '|'
+                 << user.getPassword()
+                 << '\n';
+        }
+
+        fout.close();
     }
 };
