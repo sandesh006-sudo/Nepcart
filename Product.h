@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
-class product
+class Product
 {
 private:
     int id;
@@ -12,27 +13,22 @@ private:
     string category;
     double price;
     int quantity;
-
 public:
 
     // default constructor
-    product()
-    {
+    Product(){
         id = 0;
         name = "";
         category = "";
         price = 0;
         quantity = 0;
     }
-
-    // [arameterized constructor
-    product(int i, string n, string c, double p, int q)
-    {
-        id = i;
-        name = n;
-        category = c;
-        price = p;
-        quantity = q;
+    Product(int i, string n, string c, double p, int q){
+        setId(i);
+        setName(n);
+        setCategory(c);
+        setPrice(p);
+        setQuantity(q);
     }
 
     // display product
@@ -52,26 +48,55 @@ public:
         return id;
     }
 
-    string getname() const
+    string getName() const
     {
         return name;
     }
 
-    string getcategory() const
+    string getCategory() const
     {
         return category;
     }
 
-    double getprice() const
+    double getPrice() const
     {
         return price;
     }
 
-    int getquantity() const
+    int getQuantity() const
     {
         return quantity;
     }
 
+
+    // ========= Setters =========
+    void setId(int i){id=i;}
+
+    void setName(string n){
+        name=n;
+    }
+
+    void setPrice(double p){
+        if(p<0){
+            cout<<"Price can't be negative! Set to 0.\n";
+            price=0;
+        }
+        else
+            price=p;
+    }
+
+    void setQuantity(int q){
+        if(q<0){
+            cout<<"Quantity can't be negative! Set to 0.\n";
+            quantity=0;
+        }
+        else 
+            quantity=q;
+    }
+
+    void setCategory(string c){category=c;}
+
+    
     // vayeko amount reduce garxa
     bool reducestock(int amount)
     {

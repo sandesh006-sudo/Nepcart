@@ -8,7 +8,6 @@ class admin
 private:
     string username;
     string password;
-
 public:
 
     admin()
@@ -27,4 +26,12 @@ public:
 
         return false;
     }
+
+    void addProduct(...);
+
+    void removeProduct(...);
+
+    void updateProduct(...);
+
+    void viewOrders();
 };

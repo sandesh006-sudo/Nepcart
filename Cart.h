@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
-#include<CartItem.h>
-#include<product.h>
+#include "CartItem.h"
+#include "Product.h"
 using namespace std;
 class cart
 {
@@ -33,7 +33,7 @@ class cart
         }
     }
     //product array and its size receive
-   void viewcart(product products[], int size)
+   void viewcart(Product products[], int size)
 {
     cout << "\n===== CART =====\n";
     //cart ma vako every item check garxa
@@ -45,8 +45,8 @@ class cart
         {
             if(products[j].getId() == id)
             {
-                cout << "Name: " << products[j].getname() << endl;
-                cout << "Price: " << products[j].getprice() << endl;
+                cout << "Name: " << products[j].getName() << endl;
+                cout << "Price: " << products[j].getPrice() << endl;
                 cout << "Quantity: " << items[i].getproductquantity() << endl;
 
                 cout << endl;
@@ -56,7 +56,7 @@ class cart
 }
 
 //calculate total price
-double totalprice(product products[], int size)
+double totalprice(Product products[], int size)
 {
     double total = 0;
 
@@ -68,7 +68,7 @@ double totalprice(product products[], int size)
         {
             if(products[j].getId() == id)
             {
-                double price = products[j].getprice();
+                double price = products[j].getPrice();
                 int quantity = items[i].getproductquantity();
 
                 double itemTotal = price * quantity;

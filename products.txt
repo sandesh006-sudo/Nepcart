@@ -1,0 +1,2 @@
+2|keyboard|tech|10|10
+1|wireless Mouse|tech related|100|100
