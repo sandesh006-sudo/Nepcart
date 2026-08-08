@@ -222,7 +222,7 @@ Where:
 ### Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:sandesh006-sudo/Nepcart.git
 cd Nepcart
 ```
 
