@@ -1,3 +1,4 @@
 2|Keyboard|tech|10|5
 1|wireless Mouse|tech related|100|100
 3|nep cart|project|1000|0
+123|a|a|1.1|1

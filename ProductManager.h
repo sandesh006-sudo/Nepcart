@@ -76,6 +76,8 @@ public:
         double price;
         int quantity;
 
+        Product temp;
+
         while (true)
         {
             cout << "Product ID: ";
@@ -88,14 +90,20 @@ public:
                  << " Enter ID again!\n";
         }
 
-        cout << "Product name: ";
-        getline(cin >> ws, name);
+        do
+        {
+            cout << "Product name: ";
+            getline(cin >> ws, name);
+        } while (!temp.setName(name));
 
-        cout << "Product category: ";
-        getline(cin >> ws, category);
+        do
+        {
+            cout << "Product category: ";
+            getline(cin >> ws, category);
+        } while (!temp.setCategory(category));
 
         cout << "Product price: ";
-        cin >> price;
+        price = getDouble();
 
         cout << "Product quantity: ";
         quantity = getInt();
@@ -196,26 +204,28 @@ public:
         {
         case 1:
 
-            cout << "Product name: ";
-            getline(cin >> ws, name);
-
-            products[i].setName(name);
+            do
+            {
+                cout << "Product name: ";
+                getline(cin >> ws, name);
+            } while (!products[i].setName(name));
 
             break;
 
         case 2:
+            do
+            {
+                cout << "Product category: ";
+                getline(cin >> ws, category);
 
-            cout << "Product category: ";
-            getline(cin >> ws, category);
-
-            products[i].setCategory(category);
+            } while (!products[i].setCategory(category));
 
             break;
 
         case 3:
 
             cout << "Product price: ";
-            cin >> price;
+            price = getDouble();
 
             products[i].setPrice(price);
 
