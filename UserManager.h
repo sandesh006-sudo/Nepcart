@@ -72,20 +72,54 @@ public:
     {
         string username;
         string password;
-
         cout << "\n========== REGISTER ==========\n";
 
-        cout << "Username: ";
-        cin >> username;
+        while (true)
+        {
+            cout << "Username: ";
+            cin >> username;
 
+            bool valid = true;
+
+            for (char ch : username)
+            {
+                if (ch == '|')
+                {
+                    valid = false;
+                    cout << "Username cannot contain '|'\n";
+                    break;
+                }
+            }
+
+            if (valid)
+                break;
+        }
         if (usernameExists(username))
         {
             cout << "Username already exists!\n";
             return false;
         }
 
-        cout << "Password: ";
-        cin >> password;
+        while (true)
+        {
+            cout << "Password: ";
+            cin >> password;
+
+            bool valid = true;
+
+            for (char ch : password)
+            {
+                if (ch == '|')
+                {
+                    valid = false;
+                    cout << "Password cannot contain '|'\n";
+                    break;
+                }
+            }
+
+            if (valid)
+                break;
+        }
 
         users.push_back(
             User(username, password));
