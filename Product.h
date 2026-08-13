@@ -73,9 +73,18 @@ public:
     // ========= Setters =========
     void setId(int i) { id = i; }
 
-    void setName(string n)
+    bool setName(string n)
     {
+        for (char ch : n)
+        {
+            if (ch == '|')
+            {
+                cout << "Name cannot contain '|'\n";
+                return false;
+            }
+        }
         name = n;
+        return true;
     }
 
     void setPrice(double p)
@@ -100,7 +109,20 @@ public:
             quantity = q;
     }
 
-    void setCategory(string c) { category = c; }
+    bool setCategory(string c)
+    {
+        for (char ch : c)
+        {
+            if (ch == '|')
+            {
+                cout << "Category cannot contain '|'\n";
+                return false;
+                ;
+            }
+        }
+        category = c;
+        return true;
+    }
 
     // vayeko amount reduce garxa
     bool reduceStock(int amount)
